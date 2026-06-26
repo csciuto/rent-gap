@@ -1,0 +1,13 @@
+# IPUMS raw extracts — too large and under IPUMS license
+*.dat.gz
+*.xml
+
+# Parquet — regenerate with build_parquet.py
+renters.parquet
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Old output images
+*.png
