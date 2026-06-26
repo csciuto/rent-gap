@@ -10,7 +10,7 @@ import pytest
 PARQUET = '/workspace/rent-gap/renters.parquet'
 DATA_JSON = '/workspace/rent-gap/data.json'
 RAW_GZ = '/workspace/rent-gap/usa_00016.dat.gz'
-HTML = '/workspace/rent-gap/index.html'
+HTML = '/workspace/rent-gap/docs/index.html'
 
 # ── weighted median ───────────────────────────────────────────────────────────
 

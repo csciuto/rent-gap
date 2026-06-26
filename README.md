@@ -1,6 +1,6 @@
 # rent-gap
 
-Interactive dashboard for exploring rent burden among renters age 23–35 across 24 U.S. cities. Open `index.html` in a browser.
+Interactive dashboard for exploring rent burden among renters age 23–35 across 24 U.S. cities. Open `docs/index.html` in a browser.
 
 ---
 
@@ -53,11 +53,11 @@ python3 -m pytest test_pipeline.py  # 54 tests
 Then re-embed `data.json` into `index.html`:
 
 ```python
-html  = open('index.html').read()
+html  = open('docs/index.html').read()
 data  = open('data.json').read()
 start = html.index('const PAYLOAD =') + len('const PAYLOAD =')
 end   = html.index(';\nconst DATA = PAYLOAD.cities;')
-open('index.html','w').write(html[:start] + data + html[end:])
+open('docs/index.html','w').write(html[:start] + data + html[end:])
 ```
 
 ---
