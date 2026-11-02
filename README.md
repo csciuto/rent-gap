@@ -1,5 +1,7 @@
 # rent-gap
 
+**Live:** [corey.sciu.to/rent-gap/docs](https://corey.sciu.to/rent-gap/docs/)
+
 Interactive dashboard for exploring rent burden among renters age 23–35 across 24 U.S. cities. Open `docs/index.html` in a browser.
 
 ---
@@ -65,3 +67,11 @@ open('docs/index.html','w').write(html[:start] + data + html[end:])
 ## License
 
 MIT — see [LICENSE](LICENSE). IPUMS microdata not included; aggregated statistics in `data.json` and `index.html` are freely redistributable per [IPUMS Terms of Use](https://ipums.org/about/terms).
+
+## Smoke test and preview image
+
+```bash
+npm install && npx playwright install chromium   # first time only
+npm test                                          # the app loads without JavaScript errors
+npm run screenshot                                # refreshes docs/preview.png, used for link previews
+```

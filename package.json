@@ -1,0 +1,11 @@
+{
+  "name": "rent-gap",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "screenshot": "UPDATE_PREVIEW=1 playwright test e2e/smoke.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  }
+}
