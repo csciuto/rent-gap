@@ -1,8 +1,8 @@
 # rent-gap
 
-**Live:** [corey.sciu.to/rent-gap/docs](https://corey.sciu.to/rent-gap/docs/)
+**Live:** [corey.sciu.to/rent-gap](https://corey.sciu.to/rent-gap/)
 
-Interactive dashboard for exploring rent burden among renters age 23–35 across 24 U.S. cities. Open `docs/index.html` in a browser.
+Interactive dashboard for exploring rent burden among renters age 23–35 across 24 U.S. cities. Open `docs/index.html` in a browser. The deploy publishes `docs/` at `/rent-gap/` (`/rent-gap/docs/` redirects there).
 
 ---
 

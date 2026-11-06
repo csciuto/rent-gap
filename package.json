@@ -2,10 +2,14 @@
   "name": "rent-gap",
   "private": true,
   "scripts": {
-    "test": "playwright test",
-    "screenshot": "UPDATE_PREVIEW=1 playwright test e2e/smoke.spec.js"
+    "serve": "python3 -m http.server 8091",
+    "test": "python3 -m pytest -q test_pipeline.py",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e",
+    "screenshot": "UPDATE_PREVIEW=1 playwright test e2e/smoke.spec.js --project=desktop"
   },
   "devDependencies": {
-    "@playwright/test": "^1.64.1"
+    "@playwright/test": "^1.64.1",
+    "@axe-core/playwright": "4.10.2"
   }
 }

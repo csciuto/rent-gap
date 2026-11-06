@@ -7,10 +7,15 @@ import numpy as np
 import pandas as pd
 import pytest
 
-PARQUET = '/workspace/rent-gap/renters.parquet'
-DATA_JSON = '/workspace/rent-gap/data.json'
-RAW_GZ = '/workspace/rent-gap/usa_00016.dat.gz'
-HTML = '/workspace/rent-gap/docs/index.html'
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PARQUET = HERE / 'renters.parquet'          # built locally from the raw extract; not committed
+DATA_JSON = HERE / 'data.json'
+RAW_GZ = HERE / 'usa_00016.dat.gz'          # the IPUMS extract; not committed
+HTML = HERE / 'docs' / 'index.html'
+needs_parquet = pytest.mark.skipif(not PARQUET.exists(), reason='renters.parquet not built here (needs the raw IPUMS extract)')
+needs_raw = pytest.mark.skipif(not RAW_GZ.exists(), reason='raw IPUMS extract not present')
 
 # ── weighted median ───────────────────────────────────────────────────────────
 
@@ -87,6 +92,8 @@ def test_degfield_label(code, educ, expected):
 
 @pytest.fixture(scope='module')
 def df():
+    if not PARQUET.exists():
+        pytest.skip('renters.parquet not built here (needs the raw IPUMS extract)')
     return pd.read_parquet(PARQUET)
 
 def test_parquet_loads(df):
@@ -160,6 +167,7 @@ def test_estimated_population(df):
 
 # ── raw file column parsing spot-check ────────────────────────────────────────
 
+@needs_raw
 def test_raw_file_sex_column():
     """SEX at position 113 should be 1 or 2."""
     with gzip.open(RAW_GZ, 'rt', encoding='iso-8859-1') as f:
@@ -168,6 +176,7 @@ def test_raw_file_sex_column():
             sex = line[113]
             assert sex in ('1','2'), f"Unexpected SEX value '{sex}' on line {i}"
 
+@needs_raw
 def test_raw_file_educ_range():
     """EDUC at positions 126-128 should be 00–11 for person records we care about."""
     with gzip.open(RAW_GZ, 'rt', encoding='iso-8859-1') as f:
