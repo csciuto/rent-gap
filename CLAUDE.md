@@ -12,5 +12,5 @@ Commit and push freely once tests pass.
   when those aren't present, as in CI) and the browser tests (desktop and phone, axe), then publishes `docs/` at
   https://corey.sciu.to/rent-gap/ with a version stamp. `/rent-gap/docs/` redirects there.
 - Locally the browser tests serve the repo root, so the page is at `/docs/`.
-- Open question: series labels use their chart line's color as text, and some of those colors are below 4.5:1;
-  `e2e/a11y.spec.js` leaves them out of the contrast check until that's decided.
+- Series colors: `COLORS` for chart lines, `TEXT_COLORS` (same hues, darkened to 4.5:1) wherever a series color
+  is used for text. Switched-off series rows are faded on purpose and skipped by the contrast check.

@@ -46,9 +46,7 @@ footer{padding:10px 24px;font-size:.67rem;color:#6b6b6b;font-family:sans-serif;b
 <body>
 <header>
   <h1>Rent Burden · Renters 23–35</h1>
-  <p>Renters age 23&ndash;35 &bull; ACS 2020&ndash;2024 &bull; all marital statuses &bull;
-     Unit rent = full apartment &bull; Per-person = unit &divide; household size (roommates counted) &bull;
-     EDUC=10 captures both BA &amp; BS; DEGFIELD distinguishes them</p>
+  <p>ACS 2020&ndash;2024 &bull; Unit rent = whole apartment &bull; Per person = unit rent &divide; household size</p>
 </header>
 <main>
 
@@ -85,6 +83,8 @@ const META = PAYLOAD.meta;
 const INC  = PAYLOAD.inc;
 
 const COLORS = ['#d9537a','#2e6db4','#e07b2a','#3a9e5c','#9467bd'];
+// the same hues, darkened to 4.5:1 for text (chart lines keep COLORS)
+const TEXT_COLORS = ['#c82c59','#2d6cb2','#a35618','#2c7946','#8653b5'];
 const SEX_OPTS  = ['Women','Men','Any'];
 const RACE_OPTS = ['All races','White','Black','Hispanic','Asian'];
 const EDUC_OPTS = ['All','BA+ Liberal Arts','BA+ STEM','BA+ Business','BA+ (any)','No college'];
@@ -193,7 +193,7 @@ function buildSeriesUI(){
 
     const lbl = document.createElement('div');
     lbl.className='series-label'; lbl.id='lbl'+i;
-    lbl.style.color=col; lbl.style.fontWeight='600';
+    lbl.style.color=TEXT_COLORS[i]; lbl.style.fontWeight='600';
     lbl.innerHTML=`<span>${seriesLabel(sr)}</span><span class="lbl-meta">${medInc(sr)}</span>`;
 
     row.appendChild(dot); row.appendChild(wrap); row.appendChild(lbl);

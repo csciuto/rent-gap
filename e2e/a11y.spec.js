@@ -8,11 +8,10 @@ for (const [name, path, ready] of PAGES) {
   test(`${name}: no accessibility violations`, async ({ page }) => {
     await page.goto(path);
     await expect(page.locator(ready).first()).toBeVisible();
-    // Series labels are drawn in their chart line's color, and switched-off series are faded on purpose;
-    // both are left out of the contrast check (an open design question), everything else is checked.
+    // Switched-off series are faded on purpose (an inactive control), so they're left out of the contrast check.
     const all = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
     const contrast = await new AxeBuilder({ page }).withRules(['color-contrast'])
-      .exclude('.series-label').exclude('.series-row.inactive').analyze();
+      .exclude('.series-row.inactive').analyze();
     const found = [...all.violations, ...contrast.violations];
     expect(found.map((v) => `${v.id}: ${v.nodes.length} × ${v.nodes[0].target}`)).toEqual([]);
   });

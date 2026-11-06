@@ -22,6 +22,9 @@ Interactive dashboard for exploring rent burden among renters age 23–35 across
 
 All medians are weighted (PERWT) with 95% confidence intervals via Kish effective sample size.
 
+Household size counts everyone in the unit, roommates included. Bachelor's degrees are EDUC=10, which covers both
+BA and BS; DEGFIELD tells the fields apart.
+
 ---
 
 ## Dashboard
