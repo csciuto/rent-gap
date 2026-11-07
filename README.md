@@ -75,6 +75,6 @@ MIT — see [LICENSE](LICENSE). IPUMS microdata not included; aggregated statist
 
 ```bash
 npm install && npx playwright install chromium   # first time only
-npm test                                          # the app loads without JavaScript errors
+npm run test:all                                  # pipeline tests, then browser tests (desktop and phone)
 npm run screenshot                                # refreshes docs/preview.png, used for link previews
 ```
