@@ -11,7 +11,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PARQUET = HERE / 'renters.parquet'          # built locally from the raw extract; not committed
-DATA_JSON = HERE / 'data.json'
+DATA_JSON = HERE / 'docs' / 'data.json'
 RAW_GZ = HERE / 'usa_00016.dat.gz'          # the IPUMS extract; not committed
 HTML = HERE / 'docs' / 'index.html'
 needs_parquet = pytest.mark.skipif(not PARQUET.exists(), reason='renters.parquet not built here (needs the raw IPUMS extract)')
@@ -240,22 +240,15 @@ def test_json_meta_income_plausible(payload):
 def html():
     return open(HTML).read()
 
-def test_html_has_payload(html):
-    assert 'const PAYLOAD =' in html
+def test_html_loads_data_json(html):
+    assert 'fetch("data.json")' in html
+    assert 'const PAYLOAD =' in html and len(html) < 200_000, "data belongs in docs/data.json, not inline"
 
-def test_html_payload_has_meta(html):
-    # The embedded JSON must have the meta key — regression for the blank-page bug
-    payload_start = html.index('const PAYLOAD =') + len('const PAYLOAD =')
-    payload_end   = html.index(';\nconst DATA = PAYLOAD.cities;')
-    embedded = json.loads(html[payload_start:payload_end])
-    assert 'meta' in embedded, "Embedded PAYLOAD missing 'meta' key — re-embed data.json"
-
-def test_html_payload_meta_matches_file(html):
-    payload_start = html.index('const PAYLOAD =') + len('const PAYLOAD =')
-    payload_end   = html.index(';\nconst DATA = PAYLOAD.cities;')
-    embedded = json.loads(html[payload_start:payload_end])
-    assert set(embedded['meta'].keys()) == set(embedded['cities'].keys()), \
-        "meta and cities have different city sets"
+def test_data_json_has_meta_for_every_city():
+    # regression for the blank-page bug: the payload must carry meta for each city
+    payload = json.load(open(DATA_JSON))
+    assert 'meta' in payload
+    assert set(payload['meta'].keys()) == set(payload['cities'].keys()), "meta and cities have different city sets"
 
 def test_html_references_meta(html):
     assert 'PAYLOAD.meta' in html or 'const META' in html

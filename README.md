@@ -51,25 +51,17 @@ Requires an IPUMS USA ACS 2020–2024 5-year extract with variables:
 
 ```bash
 python3 build_parquet.py   # raw extract → renters.parquet (~21 MB)
-python3 build_data.py      # renters.parquet → data.json (~12 MB)
-python3 -m pytest test_pipeline.py  # 54 tests
+python3 build_data.py      # renters.parquet → docs/data.json (~12 MB, ~2.5 MB gzipped)
+python3 -m pytest test_pipeline.py
 ```
 
-Then re-embed `data.json` into `index.html`:
-
-```python
-html  = open('docs/index.html').read()
-data  = open('data.json').read()
-start = html.index('const PAYLOAD =') + len('const PAYLOAD =')
-end   = html.index(';\nconst DATA = PAYLOAD.cities;')
-open('docs/index.html','w').write(html[:start] + data + html[end:])
-```
+The page loads `docs/data.json` at startup.
 
 ---
 
 ## License
 
-MIT — see [LICENSE](LICENSE). IPUMS microdata not included; aggregated statistics in `data.json` and `index.html` are freely redistributable per [IPUMS Terms of Use](https://ipums.org/about/terms).
+MIT — see [LICENSE](LICENSE). IPUMS microdata not included; aggregated statistics in `docs/data.json` are freely redistributable per [IPUMS Terms of Use](https://ipums.org/about/terms).
 
 ## Smoke test and preview image
 

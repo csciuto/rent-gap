@@ -1,6 +1,6 @@
 # Rent Burden: Renters 23–35
 
-A one-page dashboard (`docs/index.html`, data embedded) built from an IPUMS ACS extract by `build_parquet.py`
+A one-page dashboard (`docs/index.html`, which loads `docs/data.json`) built from an IPUMS ACS extract by `build_parquet.py`
 and `build_data.py`. See README.md for definitions.
 
 Follows the app standards in [csciuto/app-template STANDARDS.md](https://github.com/csciuto/app-template/blob/main/STANDARDS.md).

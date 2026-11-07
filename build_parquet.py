@@ -6,6 +6,8 @@ Now includes MARST=1,2 (married people) for comparison with unmarried.
 """
 import gzip, pandas as pd, numpy as np
 from collections import defaultdict
+from pathlib import Path
+HERE = Path(__file__).resolve().parent
 
 COLS = {
     'SERIAL':   (14, 22),
@@ -59,7 +61,7 @@ hh_size        = defaultdict(int)  # SERIAL → total persons in renter househol
 partner_serials = set()            # SERIALs with RELATE=11 (unmarried partner)
 rental_serials  = set()            # SERIALs that are rental units
 
-with gzip.open('/workspace/rentThing/usa_00016.dat.gz', 'rt', encoding='iso-8859-1') as f:
+with gzip.open(HERE / 'usa_00016.dat.gz', 'rt', encoding='iso-8859-1') as f:
     for line in f:
         line = line.rstrip('\n')
         if line[80] not in ('1','2','5'): continue
@@ -82,7 +84,7 @@ print("\nPass 2: extracting target persons (age 23-35, all marital statuses)..."
 records, buf = [], []
 CHUNK = 300_000
 
-with gzip.open('/workspace/rentThing/usa_00016.dat.gz', 'rt', encoding='iso-8859-1') as f:
+with gzip.open(HERE / 'usa_00016.dat.gz', 'rt', encoding='iso-8859-1') as f:
     for line in f:
         line = line.rstrip('\n')
         if line[80] not in ('1','2','5'): continue
@@ -160,5 +162,5 @@ print(f"\nTotal: {len(df):,} rows, ~{int(df['PERWT'].sum()):,} est. persons")
 cols = ['SERIAL','STATEFIP','PUMA','GQ','RENTGRS','PERWT','NCHILD','SEX','AGE','MARST',
         'RACE','HISPAN','EDUC','DEGFIELD','INCTOT','state','PUMA_str','burden','sex_label',
         'raceth','educ','degfield','has_child','N_HH','per_rent','has_partner']
-df[cols].to_parquet('/workspace/rentThing/renters.parquet', index=False)
+df[cols].to_parquet(HERE / 'renters.parquet', index=False)
 print("\nSaved renters.parquet")

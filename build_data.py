@@ -3,8 +3,10 @@ Generate data.json from renters.parquet.
 Adds "Married" (MARST 1-2) to partner dimension and "Any" to sex dimension.
 """
 import pandas as pd, numpy as np, json
+from pathlib import Path
+HERE = Path(__file__).resolve().parent
 
-df = pd.read_parquet('/workspace/rentThing/renters.parquet')
+df = pd.read_parquet(HERE / 'renters.parquet')
 
 # Partner label: married takes precedence over has_partner
 df['partner_label'] = 'No partner'
@@ -199,5 +201,5 @@ payload = {
     'inc':    ['<$35k', '$35-55k', '$55-80k', '$80-110k', '$110k+'],
 }
 raw = json.dumps(payload, separators=(',', ':'))
-open('/workspace/rentThing/data.json', 'w').write(raw)
+open(HERE / 'docs' / 'data.json', 'w').write(raw)
 print(f"\ndata.json: {len(raw)/1024/1024:.1f} MB, {len(cities_data)} cities")
